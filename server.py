@@ -5,6 +5,10 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
 
+@app.route("/")
+def index():
+	return "not authorized"
+
 @app.route("/challenge-1")
 def c1():
 	if("curl" in  request.headers.get('User-Agent')):
