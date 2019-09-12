@@ -54,5 +54,4 @@ def c4():
 	return render_template("challenge4.html")
 	
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host = '0.0.0.0',port=80)
+	app.run()
