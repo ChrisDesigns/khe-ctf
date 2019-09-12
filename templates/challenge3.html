@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#comment-stuff {
+			display: block;
+			background-color: lightblue;
+			width: 50vw;
+			padding: 1em;
+		}
+		#comment-stuff img {
+			max-width: 25vw;
+			display: block;
+		}
+		#comment-stuff:empty {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+<h2>Challenge 3:</h2>
+<p>We admins have recently upgraded our XSS filters, we bet you can't break it!</p>
+<p>Changelog:</p>
+<ul>
+	<li>img, bold, and italics tag support</li>
+</ul>
+
+<div id="comment-stuff">{{ comment | safe }}</div>
+
+<form id="comForm" method="POST">
+  Username:<br>
+  <input type="text" name="user" pattern="^[a-zA-Z0-9_]*$" title="Alphanumeric">
+  <br>
+  message:<br>
+  <textarea name="comment" rows="4" cols="50"></textarea>
+  <br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+</body>
+</html>
