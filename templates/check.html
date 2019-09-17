@@ -2,6 +2,7 @@
 <html>
 
 <head>
+<style>
 .flagField {
   display: block;
 }
@@ -33,15 +34,17 @@
 <body>
 
 <div class="container">
+{% for name in challenges -%}
   <div class="card">
-    <h2>Challenge 1</h2>
+    <h2>{{ name }}</h2>
     <p class="bg-info"></p>
     <p class="hint"></p>
-    <form>
+    <form action="/chal/{{ loop.index }}" method="POST">
       <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
       <input class="btn" type="submit" value="Submit">
     </form>
-  </div>  
+  </div>
+{%- endfor %}  
 </div>
 
 </body>

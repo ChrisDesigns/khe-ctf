@@ -1,27 +1,46 @@
 from flask import Flask, render_template, redirect, request, Markup, url_for
 import bleach
+import re
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
-
+challengesName = {
+	"Who run the world? Curls!",
+	"Let me in",
+	"Imagitive attributes",
+	"Outguessing",
+}
+def get_key(argument):
+    key_answer = {
+        "1": "KHE{curlH3ad3rsAr3C00l}",
+        "2": "KHE{m4k3sur32DataV4lidat3}",
+        "3": "KHE{XSSC4nB3D4ng3r0us}",
+        "4": "KHE{St3g0IsC00l}",
+    }
+    return key_answer.get(argument, "Invalid Challenge")
+	
 @app.route("/")
 def index():
-	return "not authorized"
+	return render_template("check.html", challenges=challengesName)
 
 
 @app.route('/chal/')
 @app.route('/chal/<ChalNum>',  methods=['GET', 'POST'])
 def hello(ChalNum=None):
-	if (ChalNum):
-		return "finish processing"
+	if (ChalNum and request.method == 'POST'):
+		proposedToken = request.form['answer-token']
+		if (proposedToken == get_key(ChalNum)):
+			return "You got challenge " + re.sub('[^0-9]','', ChalNum) + " correct!"
+		else:
+			return "You got challenge " + re.sub('[^0-9]','', ChalNum) + " wrong!"
 	else:
 		return redirect(url_for('index'))
 	
 @app.route("/challenge-1")
 def c1():
 	if("curl" in  request.headers.get('User-Agent')):
-		return "KHE{curlH3ad3rsAr3C00l}"
+		return get_key("1")
 	else:
 		return "Not Authorized"
 
@@ -30,7 +49,7 @@ def c2():
 	if request.method == 'POST':
 		user = request.form['user']
 		if (user.lower() ==  "admin" or user.lower() ==  "administrator"):
-			return "KHE{m4k3sur32DataV4lidat3}"
+			return get_key("2")
 		else:
 			return "Welcome boring user"
 	else:
@@ -53,7 +72,7 @@ def c3():
 		if( bleach.clean(comment, tags=tags_allowed, attributes=attr, strip=True) == bleach.clean(comment, tags=tags_allowed, attributes=attr2, strip=True) ):
 			comment_html = Markup('<p id="username">User:'+ bleach.clean(user) +'</p><p id="comment">Message:'+ bleach.clean(comment, tags=tags_allowed, attributes=attr, strip=True) +'</p>')
 		else:
-			return "KHE{XSSC4nB3D4ng3r0us}"
+			return get_key("3")
 		
 		return render_template("challenge3.html", comment=comment_html)
 	return render_template("challenge3.html")
