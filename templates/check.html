@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+.flagField {
+  display: block;
+}
+.btn {
+  display: block;
+}
+.card {
+  display: inline-grid;
+  border: 1px solid lightgray;
+  padding: 1em;
+}
+.container {
+  display: grid;`
+}
+.hint:empty {
+  display: none;
+}
+.hint:before {
+  content: "Hints:";
+  font-weight: bold;
+  display: inline;
+}
+.bg-info:before {
+  content: "Background:";
+  font-weight: bold;
+}
+</style>
+
+<body>
+
+<div class="container">
+  <div class="card">
+    <h2>Challenge 1</h2>
+    <p class="bg-info"></p>
+    <p class="hint"></p>
+    <form>
+      <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
+      <input class="btn" type="submit" value="Submit">
+    </form>
+  </div>  
+</div>
+
+</body>
+</html>

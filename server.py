@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, Markup
+from flask import Flask, render_template, redirect, request, Markup, url_for
 import bleach
 
 app = Flask(__name__)
@@ -9,6 +9,15 @@ app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
 def index():
 	return "not authorized"
 
+
+@app.route('/chal/')
+@app.route('/chal/<ChalNum>',  methods=['GET', 'POST'])
+def hello(ChalNum=None):
+	if (ChalNum):
+		return "finish processing"
+	else:
+		return redirect(url_for('index'))
+	
 @app.route("/challenge-1")
 def c1():
 	if("curl" in  request.headers.get('User-Agent')):
