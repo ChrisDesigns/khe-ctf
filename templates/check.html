@@ -3,48 +3,39 @@
 
 <head>
 <style>
-.flagField {
-  display: block;
-}
-.btn {
-  display: block;
-}
-.card {
-  display: inline-grid;
-  border: 1px solid lightgray;
-  padding: 1em;
-}
 .container {
   display: grid;
-  grid-template-columns: 25% 25% 25%;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
 }
-.hint:empty {
-  display: none;
+.card {
+  display: inline-grid;
+  flex: 1;
 }
-.hint:before {
-  content: "Hints:";
-  font-weight: bold;
-  display: inline;
+.card .flagField {
+  display: block;
+  margin-bottom: 1em;
 }
-.bg-info:before {
-  content: "Background:";
-  font-weight: bold;
+.card .card-link {
+	padding: 1em;
+	padding-bottom: 0;
+}
+.card form {
+	padding: 1em;
 }
 </style>
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <body>
 
 <div class="container">
 {% for name in challenges -%}
   <div class="card">
-    <h2>{{ name }}</h2>
-    <p class="bg-info"></p>
-    <p class="hint"></p>
+    <h2 class="card-header">{{ name }}</h2>
+	<a href="/challenge-{{ loop.index }}" class="card-link">Link to Challenge</a>
     <form action="/chal/{{ loop.index }}" method="POST">
       <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
-      <input class="btn" type="submit" value="Submit">
+      <input class="btn btn-primary" type="submit" value="Submit">
     </form>
   </div>
 {%- endfor %}  

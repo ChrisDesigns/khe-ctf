@@ -5,12 +5,12 @@ import re
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
-challengesName = {
+challengesName = [
 	"Who run the world? Curls!",
 	"Let me in",
 	"Imagitive attributes",
 	"Outguessing",
-}
+]
 def get_key(argument):
     key_answer = {
         "1": "KHE{curlH3ad3rsAr3C00l}",
