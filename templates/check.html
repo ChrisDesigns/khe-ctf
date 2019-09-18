@@ -8,6 +8,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 1em;
   grid-row-gap: 1em;
+  padding-top: 1em;
 }
 .card {
   display: inline-grid;
@@ -17,6 +18,9 @@
   display: block;
   margin-bottom: 1em;
 }
+.card .card-header {
+	color: white;
+}
 .card .card-link {
 	padding: 1em;
 	padding-bottom: 0;
@@ -24,15 +28,32 @@
 .card form {
 	padding: 1em;
 }
+body  {
+	background-image: url({{ url_for('static', filename='./assets/img/binary.gif') }});
+    background-blend-mode: luminosity;
+}
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <body>
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand mr-auto mr-lg-0" href="#">KHE CTF</a>
+	<div class="navbar-collapse collapse" id="navbarsExampleDefault">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" href="/">Home</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Note:</strong>
+  <span>Do not attempt to bruteforce any challenges, it result in a ban. It's not recommended, it won't work...</span>
+</div>
 <div class="container">
 {% for name in challenges -%}
   <div class="card">
-    <h2 class="card-header">{{ name }}</h2>
-	<a href="/challenge-{{ loop.index }}" class="card-link">Link to Challenge</a>
+    <h2 class="card-header bg-danger">{{ name }}</h2>
+	<a href="/challenge-{{ loop.index }}" class="card-link">Link to challenge {{ loop.index }}</a>
     <form action="/chal/{{ loop.index }}" method="POST">
       <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
       <input class="btn btn-primary" type="submit" value="Submit">
