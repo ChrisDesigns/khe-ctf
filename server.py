@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, Markup, url_for
+from flask import Flask, render_template, redirect, request, Markup, url_for, session
 import bleach
 import re
 
@@ -19,10 +19,19 @@ def get_key(argument):
         "4": "KHE{St3g0IsC00l}",
     }
     return key_answer.get(argument, "Invalid Challenge")
-	
+
+@app.route("/reset")
+def reset():
+	session.clear()
+	return redirect(url_for('index'))
+
 @app.route("/")
 def index():
-	return render_template("check.html", challenges=challengesName)
+	notDone = []
+	if (session.keys() != None):
+		for i in session.keys():
+			notDone.append(i)
+	return render_template("check.html", challenges=challengesName, done=notDone)
 
 
 @app.route('/chal/')
@@ -30,10 +39,12 @@ def index():
 def hello(ChalNum=None):
 	if (ChalNum and request.method == 'POST'):
 		proposedToken = request.form['answer-token']
+		filteredToken = re.sub('[^0-9]','', ChalNum)
 		if (proposedToken == get_key(ChalNum)):
-			return "You got challenge " + re.sub('[^0-9]','', ChalNum) + " correct!"
+			session[filteredToken]  = True
+			return "You got challenge " +  filteredToken + " correct!"
 		else:
-			return "You got challenge " + re.sub('[^0-9]','', ChalNum) + " wrong!"
+			return "You got challenge " + filteredToken + " wrong!"
 	else:
 		return redirect(url_for('index'))
 	

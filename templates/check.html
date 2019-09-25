@@ -51,8 +51,10 @@ body  {
 </div>
 <div class="container">
 {% for name in challenges -%}
+{% set indexval = loop.index %}
+{% set ignoreTrue = {'doneVal': False} %}
   <div class="card">
-    <h2 class="card-header bg-danger">{{ name }}</h2>
+    <h2 class="card-header bg-{% for doneid in done if doneid|string() == indexval|string() %}success{% if ignoreTrue.update({'doneVal': True}) %}{% endif %}{% endfor %}{% if not ignoreTrue.doneVal %}danger{% endif %}">{{ name }}</h2>
 	<a href="/challenge-{{ loop.index }}" class="card-link">Link to challenge {{ loop.index }}</a>
     <form action="/chal/{{ loop.index }}" method="POST">
       <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
