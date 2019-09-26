@@ -1,10 +1,15 @@
 from flask import Flask, render_template, redirect, request, Markup, url_for, session
 import bleach
 import re
+import requests
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
+
+SITE_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
+SITE_SECRET = '6LdtcLoUAAAAAJxdsCYTazsJrQtCjXLYveOKMTM3'
+
 challengesName = [
 	"Who run the world? Curls!",
 	"Let me in",
@@ -40,11 +45,19 @@ def hello(ChalNum=None):
 	if (ChalNum and request.method == 'POST'):
 		proposedToken = request.form['answer-token']
 		filteredToken = re.sub('[^0-9]','', ChalNum)
-		if (proposedToken == get_key(ChalNum)):
-			session[filteredToken]  = True
-			return "You got challenge " +  filteredToken + " correct!"
+		
+		token = request.form['g-recaptcha-response']
+		PARAMS =  {'secret': SITE_SECRET, 'response': token}
+		r = requests.get(url = SITE_VERIFY_URL, params = PARAMS)
+		data = r.json() 
+		if (data["success"]):
+			if (proposedToken == get_key(ChalNum)):
+				session[filteredToken]  = True
+				return "You got challenge " +  filteredToken + " correct!"
+			else:
+				return "You got challenge " + filteredToken + " wrong!"
 		else:
-			return "You got challenge " + filteredToken + " wrong!"
+			return "Please stop..."
 	else:
 		return redirect(url_for('index'))
 	

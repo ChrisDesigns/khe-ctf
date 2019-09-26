@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdtcLoUAAAAAGu02dC1AZrMOUGtOPh19h50_8vj"></script>
+<script>
+grecaptcha.ready(function() {
+    grecaptcha.execute('6LdtcLoUAAAAAGu02dC1AZrMOUGtOPh19h50_8vj', {action: 'homepage'}).then(function (token) {
+		$("input[name='g-recaptcha-response']").each(function() {
+			$(this).val(token);
+		});
+    });
+});
+</script>
 <style>
 .container {
   display: grid;
@@ -56,13 +66,13 @@ body  {
   <div class="card">
     <h2 class="card-header bg-{% for doneid in done if doneid|string() == indexval|string() %}success{% if ignoreTrue.update({'doneVal': True}) %}{% endif %}{% endfor %}{% if not ignoreTrue.doneVal %}danger{% endif %}">{{ name }}</h2>
 	<a href="/challenge-{{ loop.index }}" class="card-link">Link to challenge {{ loop.index }}</a>
-    <form action="/chal/{{ loop.index }}" method="POST">
+    <form id="check-form-{{ indexval }}" action="/chal/{{ loop.index }}" method="POST">
       <input class="flagField" type="text" name="answer-token" placeholder="KHE{Fl4gH3r3}">
-      <input class="btn btn-primary" type="submit" value="Submit">
+	  <input name='g-recaptcha-response' type='hidden'>
+	  <input class="btn btn-primary" type="submit" value="Submit">
     </form>
   </div>
 {%- endfor %}  
 </div>
-
 </body>
 </html>
