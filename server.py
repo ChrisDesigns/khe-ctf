@@ -55,11 +55,12 @@ def hello(ChalNum=None):
 		if (data["success"]):
 			if (proposedToken == get_key(ChalNum)):
 				session[filteredToken]  = True
-				return "You got challenge " +  filteredToken + " correct!"
+				return render_template("answer.html", response="You got challenge " +  filteredToken + " correct!")
 			else:
-				return "You got challenge " + filteredToken + " wrong!"
+				return render_template("answer.html", response="You got challenge " +  filteredToken + " wrong!")
 		else:
-			return "Please stop..."
+			return render_template("answer.html", response="Please stop...")
+			
 	else:
 		return redirect(url_for('index'))
 	
