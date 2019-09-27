@@ -15,6 +15,7 @@ challengesName = [
 	"Let me in",
 	"Imagitive attributes",
 	"Outguessing",
+	"Blue-line sky",
 ]
 def get_key(argument):
     key_answer = {
@@ -22,6 +23,7 @@ def get_key(argument):
         "2": "KHE{m4k3sur32DataV4lidat3}",
         "3": "KHE{XSSC4nB3D4ng3r0us}",
         "4": "KHE{St3g0IsC00l}",
+		"5": "KHE{imag3_pr0c3ssin_is_n34t}",
     }
     return key_answer.get(argument, "Invalid Challenge")
 
@@ -104,6 +106,10 @@ def c3():
 @app.route("/challenge-4")
 def c4():
 	return render_template("challenge4.html")
+
+@app.route("/challenge-5")
+def c5():
+	return render_template("challenge5.html")
 	
 if __name__ == '__main__':
 	app.run()
