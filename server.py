@@ -8,7 +8,7 @@ app.config.from_object(__name__)
 app.config['SECRET_KEY'] = 'KHECTFh4ck3rMan'
 
 SITE_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
-SITE_SECRET = '6LdtcLoUAAAAAJxdsCYTazsJrQtCjXLYveOKMTM3'
+SITE_SECRET = ''
 
 challengesName = [
 	"Who run the world? Curls!",
@@ -23,7 +23,7 @@ def get_key(argument):
         "2": "KHE{m4k3sur32DataV4lidat3}",
         "3": "KHE{XSSC4nB3D4ng3r0us}",
         "4": "KHE{St3g0IsC00l}",
-		"5": "KHE{imag3_pr0c3ssin_is_n34t}",
+	"5": "KHE{imag3_pr0c3ssin_is_n34t}",
     }
     return key_answer.get(argument, "Invalid Challenge")
 
